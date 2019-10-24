@@ -163,3 +163,80 @@ useEffect(() => {
   console.log('side effects');
 }, []);
 ```
+
+## Custom Hook
+
+独自に作成できる Hook。
+
+Custom Hook を作成することで、コンポーネントからロジックを抽出して再利用可能な関数を作成できる。
+
+### Custom Hook を定義する
+
+以下のように`use`がつく関数を定義すれば、それを Custom Hook として利用できる。
+
+```tsx
+function useStatus(): boolean {
+  const [isOnline] = useState(true);
+
+  useEffect(() => {
+    console.log('render by Custom Hook');
+
+    return () => {
+      console.log('cleanup by Custom Hook');
+    };
+  });
+
+  return isOnline;
+}
+```
+
+### Custom Hook の利用例
+
+以下の例では、`<Status>`コンポーネントと`<StatusIcon>`コンポーネントで、Custom Hook である`useStatus()`を利用している。
+
+```tsx
+import React, { useState, useEffect } from 'react';
+
+// Custom Hook
+function useStatus(): boolean {
+  const [isOnline] = useState(true);
+
+  useEffect(() => {
+    console.log('render by Custom Hook');
+
+    return () => {
+      console.log('cleanup by Custom Hook');
+    };
+  });
+
+  return isOnline;
+}
+
+const Status: React.FC = () => {
+  const isOnline = useStatus();
+  return <span>{isOnline ? 'Online' : 'Offline'}</span>;
+};
+
+const StatusIcon: React.FC = () => {
+  const isOnline = useStatus();
+  return <span style={{ color: isOnline ? 'green' : 'red' }}>●</span>;
+};
+
+const CustomHook: React.FC = () => {
+  const [count, setCount] = useState(0);
+
+  return (
+    <div>
+      <h2>CustomHook</h2>
+      <div>
+        <StatusIcon />
+        <Status />
+      </div>
+      <p>You clicked {count} times</p>
+      {/* setCount() を実行することで CustomHook コンポーネント全体が
+      再描画されるため、Custom Hook のログが出力される。*/}
+      <button onClick={() => setCount(count + 1)}>Click me</button>
+    </div>
+  );
+}
+```
