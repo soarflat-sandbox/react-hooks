@@ -11,7 +11,7 @@ const ChildComponent: React.FC = () => {
 
   return (
     <div>
-      <p id="effectHookWithCleanup">child component</p>
+      <p>child component</p>
     </div>
   );
 };
