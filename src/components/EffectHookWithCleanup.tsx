@@ -1,17 +1,33 @@
 import React, { useState, useEffect } from 'react';
 
-const ChildComponent: React.FC = () => {
+const LIMIT = 60;
+
+const Timer: React.FC = () => {
+  const [timeLeft, setTimeLeft] = useState(LIMIT);
+
+  const reset = () => {
+    setTimeLeft(LIMIT);
+  };
+
+  const tick = () => {
+    console.log('tick');
+    setTimeLeft(prevTime => (prevTime === 0 ? LIMIT : prevTime - 1));
+  };
+
   useEffect(() => {
-    console.log('render ChildComponent');
+    console.log('render Timer');
+    const timerId = setInterval(tick, 1000);
 
     return () => {
-      console.log('cleanup ChildComponent');
+      console.log('cleanup Timer');
+      clearInterval(timerId);
     };
-  });
+  }, []);
 
   return (
     <div>
-      <p>child component</p>
+      <p>time: {timeLeft}</p>
+      <button onClick={reset}>reset</button>
     </div>
   );
 };
@@ -27,9 +43,9 @@ const EffectHookWithCleanup: React.FC = () => {
           setVisible(!visible);
         }}
       >
-        toggle component
+        toggle Timer
       </button>
-      {visible ? <ChildComponent /> : ''}
+      {visible ? <Timer /> : ''}
     </div>
   );
 };
