@@ -4,6 +4,7 @@ import EffectHook from './components/EffectHook';
 import EffectHookWithCleanup from './components/EffectHookWithCleanup';
 import EffectHookOnlyReRunIfCountChanges from './components/EffectHookOnlyReRunIfCountChanges';
 import UseReducer from './components/UseReducer';
+import UseCallback from './components/UseCallback';
 
 const App: React.FC = () => {
   return (
@@ -14,6 +15,7 @@ const App: React.FC = () => {
       <EffectHookWithCleanup />
       <EffectHookOnlyReRunIfCountChanges />
       <UseReducer initialCount={10} />
+      <UseCallback />
     </div>
   );
 };
