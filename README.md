@@ -222,11 +222,11 @@ return () => {
 
 と思った。
 
-#### ↑は勘違いで普通にドキュメントに書いてあった
+#### ↑ は勘違いで普通にドキュメントに書いてあった
 
 [エフェクトのクリーンアップ](https://ja.reactjs.org/docs/hooks-reference.html#cleaning-up-an-effect)
 
->メモリリークを防止するため、コンポーネントが UI から削除される前にクリーンアップ関数が呼び出されます。それに加えて、コンポーネントが複数回レンダーされる場合（大抵はそうですが）、**新しい副作用を実行する前に前回の副作用はクリーンアップされます**。この例では、更新が発生する度に新しい購読が作成される、ということです。毎回の更新で副作用が実行されるのを抑制するためには、後の節をご覧ください。
+> メモリリークを防止するため、コンポーネントが UI から削除される前にクリーンアップ関数が呼び出されます。それに加えて、コンポーネントが複数回レンダーされる場合（大抵はそうですが）、**新しい副作用を実行する前に前回の副作用はクリーンアップされます**。この例では、更新が発生する度に新しい購読が作成される、ということです。毎回の更新で副作用が実行されるのを抑制するためには、後の節をご覧ください。
 
 というわけで、アンマウントされるタイミングだけではなく、副作用が実行されるたびにクリーンアップが実行される仕様だった。
 
@@ -258,4 +258,34 @@ const EffectHook: React.FC = () => {
     </div>
   );
 };
+```
+
+## Custom Hook
+
+独自に作成できる Hook。
+
+Custom Hook を作成することで、コンポーネントからロジックを抽出して再利用可能な関数を作成できる。
+
+### Custom Hook を定義する
+
+以下のように`use`がつく関数を定義すれば、それを Custom Hook として利用できる。
+
+```tsx
+function useStatus(): { isOnline: boolean; toggleStatus: () => void } {
+  const [isOnline, setState] = useState(true);
+
+  const toggleStatus = () => {
+    setState(!isOnline);
+  };
+
+  useEffect(() => {
+    console.log('render by Custom Hook');
+
+    return () => {
+      console.log('cleanup by Custom Hook');
+    };
+  });
+
+  return { isOnline, toggleStatus };
+}
 ```

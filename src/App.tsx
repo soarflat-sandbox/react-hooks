@@ -3,6 +3,7 @@ import StateHook from './components/StateHook';
 import EffectHook from './components/EffectHook';
 import EffectHookWithCleanup from './components/EffectHookWithCleanup';
 import EffectHookOnlyReRunIfCountChanges from './components/EffectHookOnlyReRunIfCountChanges';
+import CustomHook from './components/CustomHook';
 import UseReducer from './components/UseReducer';
 import UseMemo from './components/UseMemo';
 import UseCallback from './components/UseCallback';
@@ -15,6 +16,7 @@ const App: React.FC = () => {
       <EffectHook />
       <EffectHookWithCleanup />
       <EffectHookOnlyReRunIfCountChanges />
+      <CustomHook />
       <UseReducer initialCount={10} />
       <UseMemo />
       <UseCallback />
