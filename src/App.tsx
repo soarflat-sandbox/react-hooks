@@ -9,6 +9,7 @@ import CustomHook from './components/CustomHook';
 import UseReducer from './components/UseReducer';
 import UseMemo from './components/UseMemo';
 import UseCallback from './components/UseCallback';
+import UseRef from './components/UseRef';
 
 const App: React.FC = () => {
   return (
@@ -24,6 +25,7 @@ const App: React.FC = () => {
       <UseReducer initialCount={10} />
       <UseMemo />
       <UseCallback />
+      <UseRef />
     </div>
   );
 };
